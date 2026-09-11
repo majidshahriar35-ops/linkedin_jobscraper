@@ -360,7 +360,9 @@ def main():
     # 4. Write HTML
     OUTPUT_DIR.mkdir(exist_ok=True)
     out_path = OUTPUT_DIR / "index.html"
-    out_path.write_text(generate_html(jobs, fetch_date), encoding="utf-8")
+    html = generate_html(jobs, fetch_date)
+    html = html.encode("utf-8", errors="replace").decode("utf-8")
+    out_path.write_text(html, encoding="utf-8")
     print(f"✅ Dashboard written → {out_path}  ({out_path.stat().st_size // 1024} KB)")
     print(f"   {len(jobs)} jobs · fetched {fetch_date}")
 
